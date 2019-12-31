@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Template • TodoMVC</title>
+	<link rel="stylesheet" href="css/index.css"> 
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+	<section class="todoapp" id='app'>
+		<header class="header">
+			<h1>TodoMVC</h1>
+			<input v-model='inputText' class="new-todo" placeholder="What needs to be done?" autofocus
+				@keydown.enter='handleAdd'>
+		</header>
+		<template v-if="todos.length !==0">
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox" @change="countAll" :checked="baocunStatus()">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul class="todo-list">
+					<li :class={completed:item.complayted,editing:currentEdit===item} v-for="(item,index) in todos" v-show="defaultShow || (whichShow?!item.complayted:item.complayted)">
+						<div class="view" >
+							<input  class="toggle" type="checkbox" v-model="item.complayted">
+							<label  ref="labels"  @dblclick="currentEdit = item" >{{ item.title }}</label>
+							<button class="destroy" @click="deleHande(index)"></button>
+						</div>
+						<input class="edit" v-model="item.title" @keydown.enter="currentEdit = null">
+					</li>
+				</ul>
+			</section>
+			<footer class="footer">
+				<span class="todo-count"><strong>{{conutItem()}}</strong> item left</span>
+                <ul class="filters">
+					<li>
+						<a :class="{selected:index === dataStatusIndex}" href="#/" v-for="(item,index) in dataStatus" @click="switchStatus(index)" :key="index" >{{item}}</a>
+					</li>
+                </ul>
+                
+				<button v-show="deleComplaytd()" @click="deleDan()" class="clear-completed">Clear completed</button>
+			</footer>
+	</section>
+	</template>
+	
+	<script src="js/app.js"></script>
+</body>
+
+</html>
